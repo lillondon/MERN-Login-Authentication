@@ -5,6 +5,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { useLoginMutation } from "../features/api/usersApiSlice";
 import { setCredentials } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -30,7 +31,7 @@ const LoginScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
-      console.log(err?.data?.message || err?.error);
+      toast.error(err?.data?.message || err?.error);
     }
   };
 

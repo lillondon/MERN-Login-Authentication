@@ -1,13 +1,24 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import { useSelector, useDispatch } from "react-redux";
+import { Loading } from "../components/Loading"
+import { useRegisterMutation } from "../features/api/usersApiSlice";
+import { selectUserInfo } from "../features/auth/authSlice";
+
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const userInfo = useSelector(selectUserInfo)
+  console.log(userInfo)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const submitHandler = async (e) => {
     e.preventDefault();
